@@ -27,4 +27,16 @@ const removeItem = async (req, res) => {
     res.json({ message: 'Item removed successfully' });
 }
 
-module.exports = { getWardrobe, saveWardrobe, addItem, removeItem };
+const updateItem = async (req, res) => {
+  const uid = req.params.uid;
+  const { itemId, updatedItem } = req.body;
+
+  try {
+    await Wardrobe.updateItemInWardrobe(uid, itemId, updatedItem);
+    res.json({ message: 'Item updated successfully' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { getWardrobe, saveWardrobe, addItem, removeItem, updateItem };

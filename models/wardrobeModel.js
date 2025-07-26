@@ -37,7 +37,6 @@ const addItemToWardrobe = async (uid, itemId, item) => {
     }
 };
 
-
 // To test on postman
 // {
 //     "itemId" : "item-id-2",
@@ -58,4 +57,32 @@ const removeItemFromWardrobe = async (uid, itemId) => {
 //     "itemId" : "item-id-1"
 // }
 
-module.exports = { getWardrobeByUserId, saveWardrobe, addItemToWardrobe, removeItemFromWardrobe };
+const updateItemInWardrobe = async (uid, itemId, updatedItem) => {
+    const docRef = db.collection(WARDROBE_COLLECTION).doc(uid);
+    const docSnapshot = await docRef.get();
+
+    if (!docSnapshot.exists) {
+        throw new Error("Wardrobe does not exist for this user.");
+    }
+
+    const data = docSnapshot.data();
+    if (!data.items || !data.items[itemId]) {
+        throw new Error("Item does not exist in wardrobe.");
+    }
+
+    await docRef.update({
+        [`items.${itemId}`]: updatedItem
+    });
+};
+
+// To test on postman
+// {
+//     "itemId": "item-id-5",
+//     "updatedItem": {
+//         "name": "Green Hoodie (Updated)",
+//         "type": "topwear",
+//         "category": "partywear"
+//     }
+// }
+
+module.exports = { getWardrobeByUserId, saveWardrobe, addItemToWardrobe, removeItemFromWardrobe, updateItemInWardrobe };

@@ -22,11 +22,11 @@ const addItem = async (req, res) => {
 
 const removeItem = async (req, res) => {
   const uid = req.params.uid;
-  const { itemId } = req.body;
+  const itemId = req.params.itemId;
 
   try {
     if (!itemId) {
-      return res.status(400).json({ error: 'itemId is required in the request body' });
+      return res.status(400).json({ error: 'itemId is required in the route parameter' });
     }
 
     await Wardrobe.removeItemFromWardrobe(uid, itemId);
@@ -41,10 +41,10 @@ const removeItem = async (req, res) => {
   }
 };
 
-
 const updateItem = async (req, res) => {
   const uid = req.params.uid;
-  const { itemId, updatedItem } = req.body;
+  const itemId = req.params.itemId;
+  const updatedItem = req.body;
 
   try {
     await Wardrobe.updateItemInWardrobe(uid, itemId, updatedItem);

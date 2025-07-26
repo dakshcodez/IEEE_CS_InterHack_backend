@@ -39,7 +39,7 @@ const addItemToWardrobe = async (uid, itemId, item) => {
 
 // To test on postman
 // {
-//     "itemId" : "item-id-2",
+//     "itemId" : "item-id-1",
 //     "item" : {
 //         "name" : "Leather Jacket", "type" : "topwear", "category": "outdoor"
 //     }
@@ -70,9 +70,8 @@ const removeItemFromWardrobe = async (uid, itemId) => {
 
 
 // To test on postman
-// {
-//     "itemId" : "item-id-1"
-// }
+// provide itemId in the route parameter
+// DELETE /wardrobe/:uid/removeItem/:itemId
 
 const updateItemInWardrobe = async (uid, itemId, updatedItem) => {
     const docRef = db.collection(WARDROBE_COLLECTION).doc(uid);
@@ -94,12 +93,9 @@ const updateItemInWardrobe = async (uid, itemId, updatedItem) => {
 
 // To test on postman
 // {
-//     "itemId": "item-id-5",
-//     "updatedItem": {
-//         "name": "Green Hoodie (Updated)",
-//         "type": "topwear",
-//         "category": "partywear"
-//     }
+//   "name": "Green Hoodie (Updated)",
+//   "type": "topwear",
+//   "category": "partywear"
 // }
 
 module.exports = { getWardrobeByUserId, saveWardrobe, addItemToWardrobe, removeItemFromWardrobe, updateItemInWardrobe };

@@ -46,11 +46,28 @@ const addItemToWardrobe = async (uid, itemId, item) => {
 // }
 
 const removeItemFromWardrobe = async (uid, itemId) => {
-  const docRef = db.collection(WARDROBE_COLLECTION).doc(uid);
-  await docRef.update({
-    [`items.${itemId}`]: admin.firestore.FieldValue.delete()
-  });
+  try {
+    const docRef = db.collection(WARDROBE_COLLECTION).doc(uid);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      throw new Error(`Wardrobe for user ${uid} does not exist`);
+    }
+
+    const items = doc.data().items || {};
+    if (!items[itemId]) {
+      throw new Error(`Item with ID "${itemId}" does not exist in wardrobe`);
+    }
+
+    await docRef.update({
+      [`items.${itemId}`]: admin.firestore.FieldValue.delete()
+    });
+  } catch (error) {
+    console.error(`Error removing item: ${error.message}`);
+    throw error; // Re-throw so controller can respond with an error
+  }
 };
+
 
 // To test on postman
 // {

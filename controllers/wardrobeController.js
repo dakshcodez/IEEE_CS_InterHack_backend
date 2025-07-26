@@ -21,11 +21,26 @@ const addItem = async (req, res) => {
 };
 
 const removeItem = async (req, res) => {
-    const uid = req.params.uid;
-    const { itemId } = req.body;
+  const uid = req.params.uid;
+  const { itemId } = req.body;
+
+  try {
+    if (!itemId) {
+      return res.status(400).json({ error: 'itemId is required in the request body' });
+    }
+
     await Wardrobe.removeItemFromWardrobe(uid, itemId);
-    res.json({ message: 'Item removed successfully' });
-}
+    res.status(200).json({ message: 'Item removed successfully' });
+
+  } catch (error) {
+    console.error(`Failed to remove item: ${error.message}`);
+
+    res.status(error.statusCode || 500).json({
+      error: error.message || 'An unexpected error occurred while removing the item',
+    });
+  }
+};
+
 
 const updateItem = async (req, res) => {
   const uid = req.params.uid;

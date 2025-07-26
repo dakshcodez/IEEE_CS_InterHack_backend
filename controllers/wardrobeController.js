@@ -8,16 +8,23 @@ const getWardrobe = async (req, res) => {
 
 const saveWardrobe = async (req, res) => {
   const uid = req.params.uid;
-  const { items } = req.body;
-  await Wardrobe.saveWardrobe(uid, items);
+  const itemsMap = req.body.items;
+  await Wardrobe.saveWardrobe(uid, itemsMap);
   res.json({ message: 'Wardrobe saved successfully' });
 };
 
 const addItem = async (req, res) => {
   const uid = req.params.uid;
-  const { item } = req.body;
-  await Wardrobe.addItemToWardrobe(uid, item);
+  const { itemId, item } = req.body;
+  await Wardrobe.addItemToWardrobe(uid, itemId, item);
   res.json({ message: 'Item added successfully' });
 };
 
-module.exports = { getWardrobe, saveWardrobe, addItem };
+const removeItem = async (req, res) => {
+    const uid = req.params.uid;
+    const { itemId } = req.body;
+    await Wardrobe.removeItemFromWardrobe(uid, itemId);
+    res.json({ message: 'Item removed successfully' });
+}
+
+module.exports = { getWardrobe, saveWardrobe, addItem, removeItem };

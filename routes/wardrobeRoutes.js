@@ -5,5 +5,6 @@ const wardrobeController = require("../controllers/wardrobeController");
 router.get("/:uid", wardrobeController.getWardrobe);
 router.post("/:uid/save", wardrobeController.saveWardrobe);
 router.post("/:uid/add", wardrobeController.addItem);
+router.delete("/:uid/remove", wardrobeController.removeItem);
 
 module.exports = router;

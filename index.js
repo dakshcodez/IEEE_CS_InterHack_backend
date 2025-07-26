@@ -4,12 +4,14 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const wardrobeRoutes = require("./routes/wardrobeRoutes");
+const stylistRoutes = require('./routes/stylistRoutes');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use("/wardrobe", wardrobeRoutes);
+app.use('/stylist', stylistRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

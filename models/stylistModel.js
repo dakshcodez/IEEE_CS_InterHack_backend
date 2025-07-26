@@ -20,10 +20,8 @@ const getWardrobeByUid = async (uid) => {
 };
 
 const askStylistLLM = async (uid, question) => {
-    // Correct way to instantiate the model with @google/genai
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-    // Fetch the wardrobe for the user
     const wardrobeArray = await getWardrobeByUid(uid);
 
     const wardrobeText = wardrobeArray.map(item =>

@@ -1,7 +1,5 @@
 const { genAI } = require('../config/gemini');
-const { db } = require('../config/firebase');
 const Stylist = require('./stylistModel');
-const WARDROBE_COLLECTION = 'wardrobes';
 
 const suggestOutfitLLM = async (uid, occasion) => {
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });

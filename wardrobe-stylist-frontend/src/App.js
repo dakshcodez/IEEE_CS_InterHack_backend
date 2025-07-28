@@ -50,6 +50,23 @@ const WardrobeStylistApp = () => {
   const [outfitSuggestion, setOutfitSuggestion] = useState('');
   const [suggestionLoading, setSuggestionLoading] = useState(false);
 
+  // Format text to handle markdown-like formatting from AI responses
+  const formatText = (text) => {
+    if (!text) return '';
+    
+    // Convert **text** to bold
+    let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    
+    // Convert *text* to italic
+    formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    
+    // Convert line breaks to proper spacing
+    formatted = formatted.replace(/\n\n/g, '<br/><br/>');
+    formatted = formatted.replace(/\n/g, '<br/>');
+    
+    return <div dangerouslySetInnerHTML={{ __html: formatted }} />;
+  };
+
   // Load wardrobe on component mount
   useEffect(() => {
     loadWardrobe();
@@ -461,7 +478,9 @@ const WardrobeStylistApp = () => {
                       ? 'bg-purple-600 text-white' 
                       : 'bg-gray-100 text-gray-800'
                   }`}>
-                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                    <div className="text-sm whitespace-pre-wrap prose prose-sm max-w-none">
+                      {message.type === 'user' ? message.content : formatText(message.content)}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -532,7 +551,9 @@ const WardrobeStylistApp = () => {
               {outfitSuggestion && (
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
                   <h3 className="font-semibold text-gray-800 mb-3">Outfit Suggestion:</h3>
-                  <div className="text-gray-700 whitespace-pre-wrap">{outfitSuggestion}</div>
+                  <div className="text-gray-700 whitespace-pre-wrap prose prose-sm max-w-none">
+                    {formatText(outfitSuggestion)}
+                  </div>
                 </div>
               )}
             </div>
@@ -590,7 +611,9 @@ const WardrobeStylistApp = () => {
               {imageAnalysisResult && (
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
                   <h3 className="font-semibold text-gray-800 mb-3">Analysis Result:</h3>
-                  <div className="text-gray-700 whitespace-pre-wrap">{imageAnalysisResult}</div>
+                  <div className="text-gray-700 whitespace-pre-wrap prose prose-sm max-w-none">
+                    {formatText(imageAnalysisResult)}
+                  </div>
                 </div>
               )}
             </div>

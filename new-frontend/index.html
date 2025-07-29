@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Me - Your Personal Fashion Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(138deg, #338A94 0%, #07636E 100%);
+            min-height: 100vh;
+            color: #333;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background decorative circles */
+        .bg-circle {
+            position: absolute;
+            border: 2px solid rgba(184, 210, 254, 0.3);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .bg-circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+            transform: rotate(45deg);
+        }
+
+        .bg-circle-2 {
+            width: 400px;
+            height: 400px;
+            top: -200px;
+            right: -200px;
+            transform: rotate(-20deg);
+            opacity: 0.7;
+        }
+
+        .bg-circle-3 {
+            width: 250px;
+            height: 250px;
+            bottom: -125px;
+            left: -125px;
+            transform: rotate(30deg);
+            opacity: 0.5;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 52px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #07636E;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #338A94;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main content area */
+        .main-content {
+            background: rgba(201, 214, 235, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Common styling for sections */
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #07636E;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Form styling */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-input, .form-select {
+            padding: 12px 16px;
+            border: 2px solid rgba(51, 138, 148, 0.2);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #338A94;
+            box-shadow: 0 0 0 3px rgba(51, 138, 148, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #338A94, #07636E);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #07636E, #338A94);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(51, 138, 148, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #6B7280;
+        }
+
+        .btn-danger {
+            background: #EF4444;
+        }
+
+        .btn-success {
+            background: #10B981;
+        }
+
+        /* Chat interface */
+        .chat-container {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #338A94, #07636E);
+            color: white;
+        }
+
+        .message.bot .message-bubble {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: 1px solid rgba(51, 138, 148, 0.2);
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+        }
+
+        /* Wardrobe items grid */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .item-card {
+            background: linear-gradient(135deg, rgba(51, 138, 148, 0.1), rgba(201, 214, 235, 0.3));
+            border: 2px solid rgba(51, 138, 148, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(51, 138, 148, 0.2);
+            border-color: #338A94;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #338A94, #07636E);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .item-details h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #07636E;
+            margin-bottom: 4px;
+        }
+
+        .item-details p {
+            font-size: 14px;
+            color: #666;
+            text-transform: capitalize;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3B82F6;
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #338A94, #07636E);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* File upload area */
+        .upload-area {
+            border: 2px dashed rgba(51, 138, 148, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #338A94;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .upload-area.dragover {
+            border-color: #338A94;
+            background: rgba(51, 138, 148, 0.1);
+        }
+
+        /* Loading spinner */
+        .loading {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Result boxes */
+        .result-box {
+            background: linear-gradient(135deg, rgba(51, 138, 148, 0.1), rgba(201, 214, 235, 0.3));
+            border: 2px solid rgba(51, 138, 148, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: #07636E;
+            margin-bottom: 10px;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Filter section */
+        .filter-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            font-weight: 500;
+            color: #07636E;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-tab {
+                width: 200px;
+                justify-content: center;
+            }
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background decorative elements -->
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+    <div class="bg-circle bg-circle-3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Style Me</h1>
+            <p>Your Personal Fashion Assistant</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('wardrobe')">
+                <span>👗</span> My Wardrobe
+            </button>
+            <button class="nav-tab" onclick="switchTab('chat')">
+                <span>💬</span> Style Chat
+            </button>
+            <button class="nav-tab" onclick="switchTab('suggest')">
+                <span>✨</span> Outfit Ideas
+            </button>
+            <button class="nav-tab" onclick="switchTab('vision')">
+                <span>📷</span> Image Analysis
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Wardrobe Tab -->
+            <div id="wardrobe-tab" class="tab-content active">
+                <!-- Add New Item Section -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <span>➕</span> Add New Item
+                    </h2>
+                    <div class="form-grid">
+                        <input type="text" id="itemName" class="form-input" placeholder="Item name" />
+                        <select id="itemType" class="form-select">
+                            <option value="topwear">Topwear</option>
+                            <option value="bottomwear">Bottomwear</option>
+                            <option value="footwear">Footwear</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                        <input type="text" id="itemColor" class="form-input" placeholder="Color" />
+                        <select id="itemCategory" class="form-select">
+                            <option value="casual">Casual</option>
+                            <option value="formal">Formal</option>
+                            <option value="partywear">Party</option>
+                            <option value="outdoor">Outdoor</option>
+                        </select>
+                        <input type="text" id="itemTags" class="form-input" placeholder="Tags (comma separated)" />
+                        <button class="btn" onclick="addItem()" id="addButton">
+                            <span class="loading" id="addLoading" style="display: none;"></span>
+                            <span id="addText">➕ Add Item</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Section -->
+                <div class="section">
+                    <div class="filter-section">
+                        <span class="filter-label">🔍 Filter by type:</span>
+                        <select id="filterType" class="form-select" onchange="filterItems()">
+                            <option value="all">All Items</option>
+                            <option value="topwear">Topwear</option>
+                            <option value="bottomwear">Bottomwear</option>
+                            <option value="footwear">Footwear</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                    </div>
+
+                    <!-- Items Grid -->
+                    <div class="items-grid" id="itemsGrid">
+                        <!-- Items will be loaded here -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="empty-state" id="emptyState" style="display: none;">
+                        <div class="empty-icon">👗</div>
+                        <p>No items found. Add some items to your wardrobe!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div id="chat-tab" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">
+                        <span>💬</span> Chat with AI Stylist
+                    </h2>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- Welcome message -->
+                            <div class="message bot">
+                                <div class="message-bubble">
+                                    Hello! I'm your AI stylist. Ask me anything about fashion, outfit suggestions, or your wardrobe!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Ask your stylist anything..." />
+                            <button class="btn" onclick="sendMessage()" id="sendButton">
+                                <span class="loading" id="chatLoading" style="display: none;"></span>
+                                <span id="sendText">📤</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outfit Suggestion Tab -->
+            <div id="suggest-tab" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">
+                        <span>✨</span> Get Outfit Suggestions
+                    </h2>
+                    <div class="form-grid" style="grid-template-columns: 1fr auto;">
+                        <input type="text" id="occasionInput" class="form-input" placeholder="What's the occasion? (e.g., casual day out, business meeting, dinner date)" />
+                        <button class="btn" onclick="suggestOutfit()" id="suggestButton">
+                            <span class="loading" id="suggestLoading" style="display: none;"></span>
+                            <span id="suggestText">✨ Suggest</span>
+                        </button>
+                    </div>
+                    <div id="outfitResult" class="result-box" style="display: none;">
+                        <div class="result-title">Outfit Suggestion:</div>
+                        <div id="outfitContent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision/Image Analysis Tab -->
+            <div id="vision-tab" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">
+                        <span>📷</span> Image Analysis
+                    </h2>
+                    
+                    <!-- File Upload Area -->
+                    <div class="upload-area" onclick="document.getElementById('imageInput').click()" id="uploadArea">
+                        <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageSelect(event)" />
+                        <div style="font-size: 48px; margin-bottom: 15px;">📤</div>
+                        <p style="font-size: 16px; margin-bottom: 5px;">Click to upload an image</p>
+                        <p style="font-size: 14px; opacity: 0.7;">or drag and drop</p>
+                        <div id="selectedFileName" style="margin-top: 10px; color: #338A94; font-weight: 500;"></div>
+                    </div>
+
+                    <div class="form-grid" style="grid-template-columns: 1fr auto; margin-top: 20px;">
+                        <input type="text" id="imageQuestion" class="form-input" placeholder="What would you like to know about this image?" />
+                        <button class="btn" onclick="analyzeImage()" id="analyzeButton" disabled>
+                            <span class="loading" id="analyzeLoading" style="display: none;"></span>
+                            <span id="analyzeText">📷 Analyze</span>
+                        </button>
+                    </div>
+
+                    <div id="analysisResult" class="result-box" style="display: none;">
+                        <div class="result-title">Analysis Result:</div>
+                        <div id="analysisContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Item Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Item</h3>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="form-grid">
+                <input type="text" id="editName" class="form-input" placeholder="Item name" />
+                <select id="editType" class="form-select">
+                    <option value="topwear">Topwear</option>
+                    <option value="bottomwear">Bottomwear</option>
+                    <option value="footwear">Footwear</option>
+                    <option value="accessories">Accessories</option>
+                </select>
+                <input type="text" id="editColor" class="form-input" placeholder="Color" />
+                <select id="editCategory" class="form-select">
+                    <option value="casual">Casual</option>
+                    <option value="formal">Formal</option>
+                    <option value="partywear">Party</option>
+                    <option value="outdoor">Outdoor</option>
+                </select>
+                <input type="text" id="editTags" class="form-input" placeholder="Tags (comma separated)" />
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-success" onclick="saveEdit()" style="flex: 1;">Save Changes</button>
+                <button class="btn btn-secondary" onclick="closeEditModal()" style="flex: 1;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3000';
+        const userId = 'abc123'; // In real app, get from auth
+        let wardrobe = {};
+        let editingItemId = null;
+        let selectedImage = null;
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadWardrobe();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Chat input enter key
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Occasion input enter key
+            document.getElementById('occasionInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    suggestOutfit();
+                }
+            });
+
+            // Image question input enter key
+            document.getElementById('imageQuestion').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    analyzeImage();
+                }
+            });
+
+            // Drag and drop for image upload
+            const uploadArea = document.getElementById('uploadArea');
+            
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0 && files[0].type.startsWith('image/')) {
+                    handleImageFile(files[0]);
+                }
+            });
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to selected nav tab
+            event.target.classList.add('active');
+        }
+
+        // Wardrobe functions
+        async function loadWardrobe() {
+            try {
+                showLoading('add');
+                const response = await fetch(`${API_BASE_URL}/wardrobe/${userId}`);
+                const data = await response.json();
+                wardrobe = data.wardrobe || {};
+                renderItems();
+            } catch (error) {
+                console.error('Failed to load wardrobe:', error);
+                // Use mock data for demo
+                wardrobe = getMockData();
+                renderItems();
+            } finally {
+                hideLoading('add');
+            }
+        }
+
+        function getMockData() {
+            return {
+                'item-1': {
+                    name: 'Blue Denim Jacket',
+                    type: 'topwear',
+                    color: 'Blue',
+                    category: 'casual',
+                    tags: ['denim', 'casual', 'versatile']
+                },
+                'item-2': {
+                    name: 'Black Formal Pants',
+                    type: 'bottomwear',
+                    color: 'Black',
+                    category: 'formal',
+                    tags: ['formal', 'office', 'classic']
+                },
+                'item-3': {
+                    name: 'White Sneakers',
+                    type: 'footwear',
+                    color: 'White',
+                    category: 'casual',
+                    tags: ['sneakers', 'comfortable']
+                }
+            };
+        }
+
+        async function addItem() {
+            const name = document.getElementById('itemName').value.trim();
+            const type = document.getElementById('itemType').value;
+            const color = document.getElementById('itemColor').value.trim();
+            const category = document.getElementById('itemCategory').value;
+            const tags = document.getElementById('itemTags').value.trim();
+
+            if (!name) {
+                alert('Please enter an item name');
+                return;
+            }
+
+            try {
+                showLoading('add');
+                const itemId = `item-${Date.now()}`;
+                const itemData = {
+                    name,
+                    type,
+                    color,
+                    category,
+                    tags: tags ? tags.split(',').map(tag => tag.trim()) : []
+                };
+
+                const response = await fetch(`${API_BASE_URL}/wardrobe/${userId}/add`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ itemId, item: itemData })
+                });
+                
+                if (response.ok) {
+                    await loadWardrobe();
+                } else {
+                    // Fallback to local storage
+                    wardrobe[itemId] = itemData;
+                    renderItems();
+                }
+
+                // Clear form
+                clearAddForm();
+
+            } catch (error) {
+                console.error('Failed to add item:', error);
+                alert('Failed to add item. Please try again.');
+            } finally {
+                hideLoading('add');
+            }
+        }
+
+        function clearAddForm() {
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemColor').value = '';
+            document.getElementById('itemTags').value = '';
+            document.getElementById('itemType').value = 'topwear';
+            document.getElementById('itemCategory').value = 'casual';
+        }
+
+        async function deleteItem(itemId) {
+            if (!confirm('Are you sure you want to delete this item?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/wardrobe/${userId}/removeItem/${itemId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    await loadWardrobe();
+                } else {
+                    // Fallback to local deletion
+                    delete wardrobe[itemId];
+                    renderItems();
+                }
+            } catch (error) {
+                console.error('Failed to delete item:', error);
+                delete wardrobe[itemId];
+                renderItems();
+            }
+        }
+
+        function openEditModal(itemId) {
+            editingItemId = itemId;
+            const item = wardrobe[itemId];
+            
+            document.getElementById('editName').value = item.name;
+            document.getElementById('editType').value = item.type;
+            document.getElementById('editColor').value = item.color || '';
+            document.getElementById('editCategory').value = item.category || 'casual';
+            document.getElementById('editTags').value = item.tags ? item.tags.join(', ') : '';
+            
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() {
+            editingItemId = null;
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        async function saveEdit() {
+            if (!editingItemId) return;
+
+            const updatedItem = {
+                name: document.getElementById('editName').value.trim(),
+                type: document.getElementById('editType').value,
+                color: document.getElementById('editColor').value.trim(),
+                category: document.getElementById('editCategory').value,
+                tags: document.getElementById('editTags').value.trim() ? 
+                      document.getElementById('editTags').value.split(',').map(tag => tag.trim()) : []
+            };
+
+            if (!updatedItem.name) {
+                alert('Please enter an item name');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/wardrobe/${userId}/updateItem/${editingItemId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedItem)
+                });
+                
+                if (response.ok) {
+                    await loadWardrobe();
+                } else {
+                    // Fallback to local update
+                    wardrobe[editingItemId] = updatedItem;
+                    renderItems();
+                }
+
+                closeEditModal();
+            } catch (error) {
+                console.error('Failed to update item:', error);
+                wardrobe[editingItemId] = updatedItem;
+                renderItems();
+                closeEditModal();
+            }
+        }
+
+        function filterItems() {
+            renderItems();
+        }
+
+        function renderItems() {
+            const filterType = document.getElementById('filterType').value;
+            const itemsGrid = document.getElementById('itemsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            const filteredItems = Object.entries(wardrobe).filter(([id, item]) => 
+                filterType === 'all' || item.type === filterType
+            );
+
+            if (filteredItems.length === 0) {
+                itemsGrid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            
+            itemsGrid.innerHTML = filteredItems.map(([id, item]) => {
+                return createItemCard(id, item);
+            }).join('');
+        }
+
+        function createItemCard(id, item) {
+            const icon = getItemIcon(item.type);
+            const tagsHtml = item.tags && item.tags.length > 0 
+                ? `<div class="tags">${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>`
+                : '';
+
+            return `
+                <div class="item-card">
+                    <div class="item-header">
+                        <div class="item-info">
+                            <div class="item-icon">${icon}</div>
+                            <div class="item-details">
+                                <h3>${item.name}</h3>
+                                <p>${item.type}</p>
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn edit-btn" onclick="openEditModal('${id}')" title="Edit">✏️</button>
+                            <button class="action-btn delete-btn" onclick="deleteItem('${id}')" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        ${item.color ? `<p style="font-size: 14px; color: #666; margin-bottom: 5px;"><strong>Color:</strong> ${item.color}</p>` : ''}
+                        ${item.category ? `<p style="font-size: 14px; color: #666; margin-bottom: 5px; text-transform: capitalize;"><strong>Category:</strong> ${item.category}</p>` : ''}
+                        ${tagsHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getItemIcon(type) {
+            switch (type) {
+                case 'topwear': return '👕';
+                case 'bottomwear': return '👖';
+                case 'footwear': return '👟';
+                case 'accessories': return '👜';
+                default: return '👕';
+            }
+        }
+
+        // Chat functions
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message to chat
+            addMessageToChat('user', message);
+            input.value = '';
+
+            try {
+                showLoading('chat');
+                
+                const response = await fetch(`${API_BASE_URL}/stylist/${userId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: message })
+                });
+                
+                const data = await response.json();
+                addMessageToChat('bot', data.reply);
+                
+            } catch (error) {
+                console.error('Failed to get stylist response:', error);
+                addMessageToChat('bot', 'Sorry, I encountered an error. Please try again.');
+            } finally {
+                hideLoading('chat');
+            }
+        }
+
+        function addMessageToChat(type, content) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.innerHTML = formatText(content);
+            
+            messageDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function formatText(text) {
+            if (!text) return '';
+            
+            // Convert **text** to bold
+            let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Convert *text* to italic
+            formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Convert line breaks to proper spacing
+            formatted = formatted.replace(/\n\n/g, '<br/><br/>');
+            formatted = formatted.replace(/\n/g, '<br/>');
+            
+            return formatted;
+        }
+
+        // Outfit suggestion functions
+        async function suggestOutfit() {
+            const occasion = document.getElementById('occasionInput').value.trim();
+            
+            if (!occasion) {
+                alert('Please enter an occasion');
+                return;
+            }
+
+            try {
+                showLoading('suggest');
+                
+                const response = await fetch(`${API_BASE_URL}/suggest-outfit/${userId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ occasion })
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById('outfitContent').innerHTML = formatText(data.suggestion);
+                document.getElementById('outfitResult').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Failed to get outfit suggestion:', error);
+                document.getElementById('outfitContent').innerHTML = 'Failed to get outfit suggestion. Please try again.';
+                document.getElementById('outfitResult').style.display = 'block';
+            } finally {
+                hideLoading('suggest');
+            }
+        }
+
+        // Image analysis functions
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                handleImageFile(file);
+            }
+        }
+
+        function handleImageFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+
+            selectedImage = file;
+            document.getElementById('selectedFileName').textContent = `Selected: ${file.name}`;
+            document.getElementById('analyzeButton').disabled = !document.getElementById('imageQuestion').value.trim();
+        }
+
+        async function analyzeImage() {
+            if (!selectedImage) {
+                alert('Please select an image');
+                return;
+            }
+
+            const question = document.getElementById('imageQuestion').value.trim();
+            if (!question) {
+                alert('Please enter a question about the image');
+                return;
+            }
+
+            try {
+                showLoading('analyze');
+                
+                const formData = new FormData();
+                formData.append('image', selectedImage);
+                formData.append('question', question);
+                
+                const response = await fetch(`${API_BASE_URL}/vision/image`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById('analysisContent').innerHTML = formatText(data.response);
+                document.getElementById('analysisResult').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Failed to analyze image:', error);
+                document.getElementById('analysisContent').innerHTML = 'Failed to analyze image. Please try again.';
+                document.getElementById('analysisResult').style.display = 'block';
+            } finally {
+                hideLoading('analyze');
+            }
+        }
+
+        // Update analyze button state when question changes
+        document.getElementById('imageQuestion').addEventListener('input', function() {
+            const hasQuestion = this.value.trim().length > 0;
+            const hasImage = selectedImage !== null;
+            document.getElementById('analyzeButton').disabled = !(hasQuestion && hasImage);
+        });
+
+        // Utility functions
+        function showLoading(type) {
+            const loadingElement = document.getElementById(type + 'Loading');
+            const textElement = document.getElementById(type === 'add' ? 'addText' : 
+                                                    type === 'chat' ? 'sendText' : 
+                                                    type === 'suggest' ? 'suggestText' : 'analyzeText');
+            const buttonElement = document.getElementById(type === 'add' ? 'addButton' : 
+                                                        type === 'chat' ? 'sendButton' : 
+                                                        type === 'suggest' ? 'suggestButton' : 'analyzeButton');
+            
+            if (loadingElement) loadingElement.style.display = 'block';
+            if (textElement) textElement.style.display = 'none';
+            if (buttonElement) buttonElement.disabled = true;
+        }
+
+        function hideLoading(type) {
+            const loadingElement = document.getElementById(type + 'Loading');
+            const textElement = document.getElementById(type === 'add' ? 'addText' : 
+                                                    type === 'chat' ? 'sendText' : 
+                                                    type === 'suggest' ? 'suggestText' : 'analyzeText');
+            const buttonElement = document.getElementById(type === 'add' ? 'addButton' : 
+                                                        type === 'chat' ? 'sendButton' : 
+                                                        type === 'suggest' ? 'suggestButton' : 'analyzeButton');
+            
+            if (loadingElement) loadingElement.style.display = 'none';
+            if (textElement) textElement.style.display = 'inline';
+            if (buttonElement) buttonElement.disabled = false;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+    </script>
+</body>
+</html>

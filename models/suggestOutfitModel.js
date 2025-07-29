@@ -21,8 +21,9 @@ const suggestOutfitLLM = async (uid, occasion) => {
 
     The user has an occasion: "${occasion}"
 
-    Please suggest an outfit that is suitable for this occasion, preferring the items in their 
-    wardrobe but not limiting the scope to the wardrobe. Mention which items belong to the wardrobe 
+    Please suggest an outfit that is suitable for this occasion. Unless the user specifically 
+    mentions that they want the items only from the wardrobe, suggest the user an outfit considering
+    options inside and outside of it, while preferring the items inside. Mention which items belong to the wardrobe 
     and which do not in the suggested outfit. Ensure the user gets a topwear, a bottomwear, 
     footwear and accessories in the suggested outfit. Be specific and explain your choices.
     `;

@@ -103,7 +103,7 @@
         }
 
         .logo-icon::before {
-            content: '👗';
+            content: '👖';
         }
 
         .logo-icon::after {
@@ -605,7 +605,7 @@
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#about" class="nav-link">About Us</a>
                 <a href="#faq" class="nav-link">FAQs</a>
-                <a href="#login" class="nav-link login-link" onclick="openPopup()">Login</a>
+                <a href="index.html" class="nav-link login-link">Login</a>
             </nav>
         </header>
 
@@ -614,7 +614,7 @@
             <div class="hero-content scroll-animate">
                 <h1 class="hero-title">Reimagine your wardrobe with AI</h1>
                 <p class="hero-subtitle">Turn your closet into a smart space with intelligent outfit planning.</p>
-                <a href="#" class="join-btn" onclick="openPopup()">Join Now</a>
+                <a href="index.html" class="join-btn">Join Now</a>
             </div>
         </section>
 
@@ -725,7 +725,7 @@
             <h2 class="popup-title">Welcome to StyleMe</h2>
             <p class="popup-subtitle">Join thousands of fashion-forward individuals</p>
             
-            <button class="google-btn" onclick="loginWithGoogle()">
+            <button class="google-btn" onclick="redirectToApp()">
                 <div class="google-icon"></div>
                 Continue with Google
             </button>
@@ -799,10 +799,8 @@
             document.body.style.overflow = 'auto';
         }
 
-        function loginWithGoogle() {
-            // Simulate Google login
-            alert('Google login integration would be implemented here!');
-            closePopup();
+        function redirectToApp() {
+            window.location.href = 'index.html';
         }
 
         // FAQ Flip Animation

@@ -93,5 +93,5 @@ This project is licensed under the ISC License.
 
 ---
 
-For more details, see the code in [index.js](index.js), [wardrobeController.js](controllers/wardrobeController.js), and
+For more details, see the code in [index.js](index.js), [wardrobeController.js](controllers/wardrobeController.js), and [WardrobeStylistApp](wardrobe-stylist-frontend/src/App.js).
 

@@ -83,15 +83,8 @@ new-frontend/
 - **Backend:** Node.js, Express, Firebase Firestore, Google Generative AI (Gemini)
 - **Frontend:** React, Tailwind CSS, Lucide Icons
 
-## License
-
-This project is licensed under the ISC License.
-
 ## Author
 
 - [dakshcodez](https://github.com/dakshcodez)
 
 ---
-
-For more details, see the code in [index.js](index.js), [wardrobeController.js](controllers/wardrobeController.js), and [WardrobeStylistApp](wardrobe-stylist-frontend/src/App.js).
-
